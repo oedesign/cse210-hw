@@ -1,27 +1,23 @@
-using System;
-
 public class EternalGoal : Goal
 {
     public EternalGoal(string name, string description, int points)
-        : base(name, description, points)
-    {
-    }
+        : base(name, description, points) { }
 
     public override int RecordEvent()
     {
-        Console.WriteLine($"Congratulations! You earned {_points} points!");
-        return _points;
+        return Points;
     }
 
     public override bool IsComplete() => false;
 
     public override string GetDetailsString()
     {
-        return $"[ ] {_name} ({_description})";
+        return $"[ ] {Name} ({Description}) - Eternal Goal";
     }
 
+    // Format: EternalGoal|Name|Description|Points
     public override string GetStringRepresentation()
     {
-        return $"EternalGoal:{_name},{_description},{_points}";
+        return $"EternalGoal|{Name}|{Description}|{Points}";
     }
 }

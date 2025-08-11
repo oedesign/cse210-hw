@@ -1,40 +1,42 @@
-using System;
-
 public class SimpleGoal : Goal
 {
     private bool _isComplete;
 
-    public SimpleGoal(string name, string description, int points, bool isComplete = false)
+    // Normal constructor
+    public SimpleGoal(string name, string description, int points)
+        : base(name, description, points)
+    {
+        _isComplete = false;
+    }
+
+    // Constructor used when loading with known state
+    public SimpleGoal(string name, string description, int points, bool isComplete)
         : base(name, description, points)
     {
         _isComplete = isComplete;
     }
 
+    // Returns the points awarded (0 if already complete)
     public override int RecordEvent()
     {
         if (!_isComplete)
         {
             _isComplete = true;
-            Console.WriteLine($"Congratulations! You earned {_points} points!");
-            return _points;
+            return Points;
         }
-        else
-        {
-            Console.WriteLine("This goal is already complete.");
-            return 0;
-        }
+        return 0;
     }
 
     public override bool IsComplete() => _isComplete;
 
     public override string GetDetailsString()
     {
-        string checkMark = _isComplete ? "[X]" : "[ ]";
-        return $"{checkMark} {_name} ({_description})";
+        return $"[ {(IsComplete() ? "X" : " ")} ] {Name} ({Description})";
     }
 
+    // Format: SimpleGoal|Name|Description|Points|IsComplete
     public override string GetStringRepresentation()
     {
-        return $"SimpleGoal:{_name},{_description},{_points},{_isComplete}";
+        return $"SimpleGoal|{Name}|{Description}|{Points}|{_isComplete}";
     }
 }
